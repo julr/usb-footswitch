@@ -1,0 +1,14 @@
+# files
+*.user
+*.7z
+*.pcapng
+*.bak
+
+# folders
+.vs/
+.visualgdb/
+**/VisualGDB/
+**/bin/
+**/obj/
+**/publish/
+**/KiCad-backups/

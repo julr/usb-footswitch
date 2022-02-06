@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Firmware", "Firmware\Firmware.vcxproj", "{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configurator", "Configurator\Configurator.csproj", "{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|VisualGDB = Debug|VisualGDB
+		Release|Any CPU = Release|Any CPU
+		Release|VisualGDB = Release|VisualGDB
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Debug|Any CPU.ActiveCfg = Debug|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Debug|Any CPU.Build.0 = Debug|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Debug|VisualGDB.ActiveCfg = Debug|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Release|Any CPU.ActiveCfg = Release|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Release|Any CPU.Build.0 = Release|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
+		{2C4A2AD3-D09E-4225-8994-5B366CEB39F1}.Release|VisualGDB.Build.0 = Release|VisualGDB
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Debug|VisualGDB.ActiveCfg = Debug|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Debug|VisualGDB.Build.0 = Debug|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Release|VisualGDB.ActiveCfg = Release|Any CPU
+		{F1949EFC-1F95-49A4-A04F-1F3504CB18D5}.Release|VisualGDB.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5C2EBFD-9876-452D-8899-4637FC658146}
+	EndGlobalSection
+EndGlobal

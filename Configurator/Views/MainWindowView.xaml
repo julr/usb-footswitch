@@ -1,0 +1,179 @@
+﻿<Window x:Class="Configurator.Views.MainWindowView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Configurator.ViewModels"
+        xmlns:local="clr-namespace:Configurator"
+        mc:Ignorable="d"
+        Title="USB Footswitch Configurator" Height="auto" Width="auto" SizeToContent="WidthAndHeight">
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <local:BoolToGridRowHeightConverter x:Key="BoolToGridRowHeightConverter" />
+    </Window.Resources>
+    <Grid Margin="2,2,2,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Device Info">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Serial Number:"/>
+                <TextBlock Text="{Binding SerialNumber}" VerticalAlignment="Center"/>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,2,2,2" />
+                <Label Content="Firmware Version:"/>
+                <TextBlock Text="{Binding FirmwareVersion}" VerticalAlignment="Center"/>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"  Margin="5,2,2,2" />
+                <Label Content="No. of Buttons:"/>
+                <TextBlock Text="{Binding NumberOfButtons}" VerticalAlignment="Center"/>
+                <Button Content="Start Bootloader" Command="{Binding StartBootloader}" VerticalAlignment="Center" Margin="30,0,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="General Configuration" Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Debounce Time"/>
+                <TextBox Text="{Binding DebounceTime}" PreviewTextInput="TextBox_PreviewTextInput" VerticalAlignment="Center" Width="25" MaxLength="3" MaxLines="1" TextAlignment="Right" />
+                <Label Content="ms"/>
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"  Margin="5,2,2,2" />
+                <Label Content="LED Mode:"/>
+                <ComboBox ItemsSource="{Binding PossibleLedModes}" SelectedItem="{Binding LedMode}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Button Configuration" Grid.Row="2" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding EnabledButtons[0], Converter={StaticResource BoolToGridRowHeightConverter}}"/>
+                    <RowDefinition Height="{Binding EnabledButtons[1], Converter={StaticResource BoolToGridRowHeightConverter}}" />
+                    <RowDefinition Height="{Binding EnabledButtons[1], Converter={StaticResource BoolToGridRowHeightConverter}}"/>
+                    <RowDefinition Height="{Binding EnabledButtons[2], Converter={StaticResource BoolToGridRowHeightConverter}}"/>
+                    <RowDefinition Height="{Binding EnabledButtons[2], Converter={StaticResource BoolToGridRowHeightConverter}}"/>
+                    <RowDefinition Height="{Binding EnabledButtons[3], Converter={StaticResource BoolToGridRowHeightConverter}}"/>
+                    <RowDefinition Height="{Binding EnabledButtons[3], Converter={StaticResource BoolToGridRowHeightConverter}}"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!-- Note: This could be made a separate control instead of copying it 4 times -->
+                <Label Content="Button 1" FontWeight="Bold" VerticalAlignment="Center"/>
+                <Label Content="Scan Code:" Grid.Column="1" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding PossibleKeys}" SelectedItem="{Binding ButtonConfigurations[0].Key}" Grid.Column="2" VerticalAlignment="Center"/>
+                <Label Content="Modifier:" Grid.Column="3" VerticalAlignment="Center"/>
+                <Grid Grid.Column="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Content="Left Control" IsChecked="{Binding ButtonConfigurations[0].ModifierLeftControl}" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Shift" IsChecked="{Binding ButtonConfigurations[0].ModifierLeftShift}" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Alt" IsChecked="{Binding ButtonConfigurations[0].ModifierLeftAlt}" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Gui" IsChecked="{Binding ButtonConfigurations[0].ModifierLeftGui}" Grid.Column="3" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Control" IsChecked="{Binding ButtonConfigurations[0].ModifierRightControl}" Grid.Row="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Shift" IsChecked="{Binding ButtonConfigurations[0].ModifierRightShift}" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Alt" IsChecked="{Binding ButtonConfigurations[0].ModifierRightAlt}" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Gui" IsChecked="{Binding ButtonConfigurations[0].ModifierRightGui}" Grid.Row="1" Grid.Column="3" Margin="0,0,5,0"/>
+                </Grid>
+                <Separator Grid.Row="1" Grid.ColumnSpan="5"/>
+
+                <Label Content="Button 2" FontWeight="Bold" Grid.Row="2" VerticalAlignment="Center"/>
+                <Label Content="Scan Code:" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding PossibleKeys}" SelectedItem="{Binding ButtonConfigurations[1].Key}" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"/>
+                <Label Content="Modifier:" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center"/>
+                <Grid Grid.Column="4" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Content="Left Control" IsChecked="{Binding ButtonConfigurations[1].ModifierLeftControl}" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Shift" IsChecked="{Binding ButtonConfigurations[1].ModifierLeftShift}" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Alt" IsChecked="{Binding ButtonConfigurations[1].ModifierLeftAlt}" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Gui" IsChecked="{Binding ButtonConfigurations[1].ModifierLeftGui}" Grid.Column="3" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Control" IsChecked="{Binding ButtonConfigurations[1].ModifierRightControl}" Grid.Row="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Shift" IsChecked="{Binding ButtonConfigurations[1].ModifierRightShift}" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Alt" IsChecked="{Binding ButtonConfigurations[1].ModifierRightAlt}" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Gui" IsChecked="{Binding ButtonConfigurations[1].ModifierRightGui}" Grid.Row="1" Grid.Column="3" Margin="0,0,5,0"/>
+                </Grid>
+                <Separator Grid.Row="3" Grid.ColumnSpan="5"/>
+
+                <Label Content="Button 3" FontWeight="Bold" Grid.Row="4" VerticalAlignment="Center"/>
+                <Label Content="Scan Code:" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding PossibleKeys}" SelectedItem="{Binding ButtonConfigurations[2].Key}" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center"/>
+                <Label Content="Modifier:" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center"/>
+                <Grid Grid.Column="4" Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Content="Left Control" IsChecked="{Binding ButtonConfigurations[2].ModifierLeftControl}" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Shift" IsChecked="{Binding ButtonConfigurations[2].ModifierLeftShift}" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Alt" IsChecked="{Binding ButtonConfigurations[2].ModifierLeftAlt}" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Gui" IsChecked="{Binding ButtonConfigurations[2].ModifierLeftGui}" Grid.Column="3" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Control" IsChecked="{Binding ButtonConfigurations[2].ModifierRightControl}" Grid.Row="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Shift" IsChecked="{Binding ButtonConfigurations[2].ModifierRightShift}" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Alt" IsChecked="{Binding ButtonConfigurations[2].ModifierRightAlt}" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Gui" IsChecked="{Binding ButtonConfigurations[2].ModifierRightGui}" Grid.Row="1" Grid.Column="3" Margin="0,0,5,0"/>
+                </Grid>
+                <Separator Grid.Row="5" Grid.ColumnSpan="5"/>
+
+                <Label Content="Button 4" FontWeight="Bold" Grid.Row="6" VerticalAlignment="Center"/>
+                <Label Content="Scan Code:" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding PossibleKeys}" SelectedItem="{Binding ButtonConfigurations[3].Key}" Grid.Column="2" Grid.Row="6" VerticalAlignment="Center"/>
+                <Label Content="Modifier:" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center"/>
+                <Grid Grid.Column="4" Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox Content="Left Control" IsChecked="{Binding ButtonConfigurations[3].ModifierLeftControl}" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Shift" IsChecked="{Binding ButtonConfigurations[3].ModifierLeftShift}" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Alt" IsChecked="{Binding ButtonConfigurations[3].ModifierLeftAlt}" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Left Gui" IsChecked="{Binding ButtonConfigurations[3].ModifierLeftGui}" Grid.Column="3" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Control" IsChecked="{Binding ButtonConfigurations[3].ModifierRightControl}" Grid.Row="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Shift" IsChecked="{Binding ButtonConfigurations[3].ModifierRightShift}" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Alt" IsChecked="{Binding ButtonConfigurations[3].ModifierRightAlt}" Grid.Row="1" Grid.Column="2" Margin="0,0,5,0"/>
+                    <CheckBox Content="Right Gui" IsChecked="{Binding ButtonConfigurations[3].ModifierRightGui}" Grid.Row="1" Grid.Column="3" Margin="0,0,5,0"/>
+                </Grid>
+                <Separator Grid.Row="3" Grid.ColumnSpan="5"/>
+            </Grid>
+        </GroupBox>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Button Content="Apply" Command="{Binding ApplySettings}" Padding="3,3,3,3" VerticalAlignment="Center"/>
+            <Button Content="Save" Command="{Binding SaveSettings}"  Padding="3,3,3,3" Margin="5,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Window>
