@@ -26,9 +26,8 @@ private:
     static constexpr std::size_t LAST_CONFIG_INDEX{(Board::USER_FLASH_SECTION_SIZE / CONFIG_SIZE) - 1};
     static constexpr Config DEFAULT_CONFIG
     {
-        // Buttons are mapped to F5 - F8 with no modifiers
-        /*.Buttons = { 0x3E, 0x00, 0x3F, 0x00, 0x40, 0x00, 0x41, 0x00, },*/
-        .Buttons = { 0x68, 0x00, 0x69, 0x00, 0x6A, 0x00, 0x6B, 0x00, },
+        // Buttons are mapped to 1 - 4 with no modifiers
+        .Buttons = { {0x1E, 0x00}, {0x1F, 0x00}, {0x20, 0x00}, {0x21, 0x00} },
         .DebounceTime = 5,
         .SetLedMode = LedMode::NORMAL
     };
