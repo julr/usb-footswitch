@@ -3,4 +3,4 @@
 
 static constexpr std::uint8_t VersionMajor{1};
 
-static constexpr std::uint8_t VersionMinor{0};
+static constexpr std::uint8_t VersionMinor{1};
