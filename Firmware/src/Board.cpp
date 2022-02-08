@@ -177,7 +177,8 @@ void Board::initializePins()
         .Mode = LL_GPIO_MODE_OUTPUT,
         .Speed = LL_GPIO_SPEED_FREQ_LOW,
         .OutputType = LL_GPIO_OUTPUT_PUSHPULL,
-        .Pull = LL_GPIO_PULL_NO
+        .Pull = LL_GPIO_PULL_NO,
+        .Alternate = LL_GPIO_AF_0
     };
     LL_GPIO_Init(ONBOARDLED_PORT, &LedInitStruct);
     setLed(LED::ONBOARD, false);
@@ -188,7 +189,9 @@ void Board::initializePins()
         .Pin = ONBOARD_BUTTON_PIN,
         .Mode = LL_GPIO_MODE_INPUT,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
-        .Pull = LL_GPIO_PULL_UP
+        .OutputType = LL_GPIO_MODE_INPUT,
+        .Pull = LL_GPIO_PULL_UP,
+        .Alternate = LL_GPIO_AF_0
     };
     LL_GPIO_Init(ONBOARD_BUTTON_PORT, &ButtonInitStruct);
    
@@ -198,6 +201,7 @@ void Board::initializePins()
         .Pin = LL_GPIO_PIN_11 | LL_GPIO_PIN_12,
         .Mode = LL_GPIO_MODE_ALTERNATE,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
+        .OutputType = LL_GPIO_MODE_INPUT,
         .Pull = LL_GPIO_PULL_NO,
         .Alternate = LL_GPIO_AF_10
     };
@@ -209,7 +213,9 @@ void Board::initializePins()
         .Pin = LL_GPIO_PIN_9,
         .Mode = LL_GPIO_MODE_INPUT,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
-        .Pull = LL_GPIO_PULL_NO
+        .OutputType = LL_GPIO_MODE_INPUT,
+        .Pull = LL_GPIO_PULL_NO,
+        .Alternate = LL_GPIO_AF_0
     };
     LL_GPIO_Init(GPIOA, &VbusPinInitStruct);
     
@@ -219,6 +225,7 @@ void Board::initializePins()
         .Pin = LL_GPIO_PIN_10,
         .Mode = LL_GPIO_MODE_ALTERNATE,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
+        .OutputType = LL_GPIO_MODE_INPUT,
         .Pull = LL_GPIO_PULL_UP,
         .Alternate = LL_GPIO_AF_10
     };
@@ -230,7 +237,9 @@ void Board::initializePins()
         .Pin = FOOT_BUTTON_1_PIN | FOOT_BUTTON_2_PIN | FOOT_BUTTON_3_PIN | FOOT_BUTTON_4_PIN,
         .Mode = LL_GPIO_MODE_INPUT,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
-        .Pull = LL_GPIO_PULL_DOWN
+        .OutputType = LL_GPIO_MODE_INPUT,
+        .Pull = LL_GPIO_PULL_DOWN,
+        .Alternate = LL_GPIO_AF_0
     };
     LL_GPIO_Init(FOOT_BUTTONS_PORT, &FootButtosInitStruct);
     
@@ -240,7 +249,9 @@ void Board::initializePins()
         .Pin = FOOT_LED_1_PIN ,
         .Mode = LL_GPIO_MODE_INPUT,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
-        .Pull = LL_GPIO_PULL_NO
+        .OutputType = LL_GPIO_MODE_INPUT,
+        .Pull = LL_GPIO_PULL_NO,
+        .Alternate = LL_GPIO_AF_0
     };
     LL_GPIO_Init(FOOT_LED_1_PORT, &FootLedsInitStruct);
     LL_GPIO_ResetOutputPin(FOOT_LED_1_PORT, FOOT_LED_1_PIN);
@@ -263,7 +274,9 @@ void Board::initializePins()
         .Pin = BOARD_CONFIG_1_PIN | BOARD_CONFIG_1_PIN,
         .Mode = LL_GPIO_MODE_INPUT,
         .Speed = LL_GPIO_SPEED_FREQ_HIGH,
-        .Pull = LL_GPIO_PULL_NO
+        .OutputType = LL_GPIO_MODE_INPUT,
+        .Pull = LL_GPIO_PULL_NO,
+        .Alternate = LL_GPIO_AF_0
     };
     LL_GPIO_Init(BOARD_CONFIG_PORT, &BoardConfigInitStruct);
 }
@@ -380,7 +393,8 @@ void Board::readBoardConfig()
     LL_GPIO_SetPinPull(BOARD_CONFIG_PORT, BOARD_CONFIG_2_PIN, LL_GPIO_PULL_NO);
 }
 
-
+#pragma GCC push_options
+#pragma GCC optimize ("O0")
 void Board::startBootloader()
 {
     using FunctionPtr = void(*)();
@@ -412,6 +426,7 @@ void Board::startBootloader()
     // Should never be executed, just in case of an error the system does not stall
     __NVIC_SystemReset();
 }
+#pragma GCC pop_options
 
 // The Hal LL does not provide and flash drivers, this needs to be implemented by hand
 bool Board::eraseUserFlash()

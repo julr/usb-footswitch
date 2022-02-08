@@ -81,7 +81,7 @@ static constexpr char STRING_CONTROL_INTERFACE[] { "Control Interface" };
 // Application return pointer to descriptor
 extern "C" std::uint8_t const * tud_descriptor_device_cb(void)
 {
-    return reinterpret_cast<std::uint8_t* const>( const_cast<tusb_desc_device_t* const>( &DEVICE_DESCRIPTOR ));
+    return reinterpret_cast<std::uint8_t*>(const_cast<tusb_desc_device_t*>( &DEVICE_DESCRIPTOR ));
 }
 
 // Invoked when received GET HID REPORT DESCRIPTOR
