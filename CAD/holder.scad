@@ -39,7 +39,7 @@ difference()
                 cube([debug_cutout_width, grip, grip]);
         }
 
-        if(debug_cutout == true) // Cutout for rail in case
+        if(rail == true) // Cutout for rail in case
         {
             cube([pcb_width + grip * 2, rail_depth, rail_height]);
         }
